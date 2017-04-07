@@ -1,0 +1,102 @@
+
+						                -	SOCIAL NETWORK - 
+
+===============================================================================
+	
+	- CUPRINS - 
+
+1) TASK 1: TOPOLOGIA RETELEI
+
+2) TASK 2: COMUNITATI
+
+3) TASK 3: GRADUL DE SOCIALIZARE
+
+4) PARSAREA DIN MAIN A FISIERELOR DE INTRARE
+
+===============================================================================
+
+1) TASK 1: TOPOLOGIA RETELEI
+	
+	In clasa User, am definit ID-ul, Numele, vectorul de Prieteni si masca folo-
+sita la Task-ul 2. Am definit constructori, setteri si getteri si am implementat
+urmatoarele metode:
+
+	- addFriend(User newfriend) care imi adauga un nou prieten in lista de prie-
+teni a utilizatorului u;
+	- removeFriend(int ID) care imi cauta ID-ul ce trebuie eliminat in lista de 
+prieneni a utilizatorului u si il elimina atunci cand il gaseste;
+	- friendship(int ID) care cauta prin lista lui u, ID-ul dat ca parametru si
+in caz ca il gaseste, returneaza true(exista relatie de prietenie intre cei doi);
+	
+	In ultimele doua metode din clasa, am suprascris:
+	- metoda toString pentru ca programul sa afiseze sub formatul dat in enunt;
+	- metoda compareTo prin intermediul careia ID-urile se mentin sortate (supra-
+scrierea acesteia ajuta la folosirea functiei sort());
+
+
+	In clasa Network, am definit un vector de Utilizatori, de tip User si un
+obiect de tip Network, ce respecta tipologia SINGLETON (este private, si are o 
+metoda publica (getNetwork), prin intermediul careia se returneaza obiectul 
+SINGLETON).
+
+	Pentru comanda ADD, am realizat metoda add, in care daca in toti utilizatorii
+retelei se gaseste ID-ul dat ca parametru, se afiseaza "DUPLEICATE", altfel, se 
+adauga utilizatorul, se sorteaza utilizatorii dupa ID si se afiseaza "OK".
+	Pentru comanda REMOVE, am realizat mai intai metoda searchUser(int ID), Daca
+ utilizatorul este in retea, atunci el se sterge atat din retea, cat si din fie-
+care lista de prieteni a celorlalti utilizatori. 
+	Pentru comanda FRIEND, se cauta cei doi utilizatori in retea, iar daca se ga-
+sesc, se adauga la lista de prieteni a fiecaruia, ce se sorteaza ulterior dupa 
+ID-uri.
+	Pentru comanda UNFRIEND, se cauta cei doi utilizatori: daca nu exista sau nu 
+sunt prieteni => "INEXISTENT", altfel se sterg din lista de prieteni a fiecaruia
+dintre cei doi utilizatori => "OK".
+	Pentru printarea useri-lor, in metoda print, parametrul "c" este "u"; se cauta
+utilizatorul si se afiseaza, sub forma din enunt, prin suprascrierea metodei 
+toString().
+	Pentru printarea network-ului, in metoda print, parametrul "c" este "n"; pen-
+tru fiecare user din retea, se afiseaza infrmatiile legate de el.
+
+===============================================================================	
+
+2) TASK 2: COMUNITATI
+
+	In clasa Network, am implementat metoda DFS, in care, utilizatorul de la ca-
+re porneste parcurgerea in adancime, are masca setata la 0. Se parcurg toti prie-
+tenii utilizatorului "user" si daca acestia au masca 0, se adauga in comunitate 
+si se apeleaza recursiv metoda DFS. Dupa ce s-au parcurs toti prietenii, acestia
+se seteaza cu masca 2.
+	Pentru printarea comunitatilor, daca in metoda print, "c" este "c", se apelea-
+za metoda printCommunities(). In aceasta, pentru toti utilizatorii se seteaza 
+masca 0 si se adauga la comunitate, dupa care se face DFS si se printeaza comu-
+nitatea.
+
+===============================================================================
+
+3) TASK 3: GRADUL DE SOCIALIZARE
+
+	In clasa Network, am imlementat metoda BFS, in care am folosit o coada si un
+vector("array") de dimensiunea comunitatii. In acest vector, am setat fiecare
+element cu valoarea maxima Integer.MAX_VALUE.
+	Astfel, se adauga in coada user-ul, iar valoarea de la indexul acestuia de-
+vine 0. Cat timp coada nu e goala, se retine pe rand indexul fiecarui prieten 
+de-al sau. Daca indexul este MAX_VALUE, se adauga in coada, iar in vectorul array,
+pe pozitia acestuia se pune valoarea parintelui + 1. Din vectorul array, se ia 
+cea mai mare valoare, iar metoda BFS o returneaza.
+	Pentru printarea gradului de socializare, daca in metoda print, "c" este "s",
+se apeleaza metoda printStrength(). In aceasta metoda, toti utilizatorii au initi-
+al masca 0, se adauga la comunitate primul user, dupa care se aplica DFS pe el 
+si pe comunitate. Mai departe, se face BFS pe toti userii din comunitate si valoa-
+rea returnata de acesta metoda se salveaza intr-o variabila. Pentru calcularea 
+gradului de socializare, se aplica formula data in enunt, dar numai in cazul in
+care numitorul este diferit de 0. la final afisandu-se rezultatul acestei formule.
+
+===============================================================================
+
+4) PARSAREA DIN MAIN A FISIERELOR DE INTRARE
+
+	In clasa Main, am creat un obiect de tip FileParser si o lista in care retin
+fiecare rand din fisierele de intrare. Am folosit metodele din clasa FileParser 
+si, cat timp lista mea nu este goala, se ia fiecare cuvant si in functie de ceea
+ce semnifica el, apelez pe rand metodele implementate in Network, pentru a rezol-
+va cerintele temei.
